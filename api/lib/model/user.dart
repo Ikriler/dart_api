@@ -1,3 +1,4 @@
+import 'package:api/model/history.dart';
 import 'package:conduit/conduit.dart';
 import 'package:api/model/note.dart';
 
@@ -18,6 +19,8 @@ class _User {
   String? refreshToken;
 
   ManagedSet<Note>? noteList;
+  
+  ManagedSet<History>? historyList;
 
   @Column(omitByDefault: true)
   String? salt;

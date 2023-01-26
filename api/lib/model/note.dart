@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:conduit/conduit.dart';
 import 'package:api/model/user.dart';
 
@@ -18,7 +20,8 @@ class _Note {
   String? dateTimeCreate;
   @Column(nullable: false)
   String? dateTimeEdit;
-
+  @Column(nullable: false)
+  bool? deleted;
   @Relate(#noteList, isRequired: true, onDelete: DeleteRule.cascade)
   User? user;
 }
