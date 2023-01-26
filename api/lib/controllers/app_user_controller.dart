@@ -66,8 +66,8 @@ class AppUserConttolelr extends ResourceController {
   @Operation.put()
   Future<Response> updatePassword(
     @Bind.header(HttpHeaders.authorizationHeader) String header,
-    @Bind.body() String newPassword,
-    @Bind.body() String oldPassword,
+    @Bind.query("newPassword") String newPassword,
+    @Bind.query("oldPassword") String oldPassword,
   ) async {
     try {
       // Получаем id пользователя

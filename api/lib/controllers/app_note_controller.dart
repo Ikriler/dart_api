@@ -220,7 +220,7 @@ class AppNoteController extends ResourceController {
       final noteData = await managedContext.fetchObjectWithID<Note>(noteId);
 
       noteData!.removePropertiesFromBackingMap(["user", "id", "deleted"]);
-      createHistoryRow(id, "Заметка с номером ${noteData.number} удалена");
+      createHistoryRow(id, "Заметка с номером ${noteData.number} создана");
       return AppResponse.ok(
         body: noteData.backing.contents,
         message: 'Успешное создание заметки',
