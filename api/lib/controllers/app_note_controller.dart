@@ -89,7 +89,8 @@ class AppNoteController extends ResourceController {
   Future<Response> getNotes(
       @Bind.header(HttpHeaders.authorizationHeader) String header,
       {@Bind.query("search") String? search,
-      @Bind.query("page") int? page,
+      @Bind.query("limit") int? limit,
+      @Bind.query("offset") int? offset,
       @Bind.query("filter") String? filter}) async {
     try {
       final id = AppUtils.getIdFromHeader(header);
@@ -115,22 +116,20 @@ class AppNoteController extends ResourceController {
           notesQuery.where((note) => note.deleted).equalTo(false);
       }
 
+      if (limit != null && limit > 0) {
+        notesQuery.fetchLimit = limit;
+      }
+      if (offset != null && offset > 0) {
+        notesQuery.offset = offset;
+      }
+
       final notes = await notesQuery.fetch();
 
       List notesJson = List.empty(growable: true);
 
-      if (page != null && page > 0) {
-        int exp = (page - 1) * 20;
-        for (int i = exp > 0 ? exp - 1 : exp; i < notes.length; i++) {
-          final note = notes[i];
-          note.removePropertiesFromBackingMap(["user", "id", "deleted"]);
-          notesJson.add(note.backing.contents);
-        }
-      } else {
-        for (final note in notes) {
-          note.removePropertiesFromBackingMap(["user", "id", "deleted"]);
-          notesJson.add(note.backing.contents);
-        }
+      for (final note in notes) {
+        note.removePropertiesFromBackingMap(["user", "id", "deleted"]);
+        notesJson.add(note.backing.contents);
       }
 
       if (notesJson.isEmpty) {
