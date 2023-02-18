@@ -39,47 +39,55 @@ class ProfileScreenState extends State<ProfileScreen> {
               emailController.text = (state as UserData).user.email;
             }
             return Form(
+                key: formKey,
                 child: Column(
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-                  child: TextFormField(
-                    controller: userNameController,
-                    decoration: new InputDecoration(
-                        hintText: "Логин", border: OutlineInputBorder()),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-                  child: TextFormField(
-                    controller: emailController,
-                    decoration: new InputDecoration(
-                        hintText: "Почта", border: OutlineInputBorder()),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-                  child: TextFormField(
-                    controller: oldPasswordController,
-                    decoration: new InputDecoration(
-                        hintText: "Старый пароль",
-                        border: OutlineInputBorder()),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-                  child: TextFormField(
-                    controller: newPasswordController,
-                    decoration: new InputDecoration(
-                        hintText: "Новый пароль", border: OutlineInputBorder()),
-                  ),
-                ),
-              ],
-            ));
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 30),
+                      child: TextFormField(
+                        validator: (value) {
+                          if(value == "") {
+                            return "Логин не должен быть пустым";
+                          }
+                          return null;
+                        },
+                        controller: userNameController,
+                        decoration: new InputDecoration(
+                            hintText: "Логин", border: OutlineInputBorder()),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 30),
+                      child: TextFormField(
+                        controller: emailController,
+                        decoration: new InputDecoration(
+                            hintText: "Почта", border: OutlineInputBorder()),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 30),
+                      child: TextFormField(
+                        controller: oldPasswordController,
+                        decoration: new InputDecoration(
+                            hintText: "Старый пароль",
+                            border: OutlineInputBorder()),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 30),
+                      child: TextFormField(
+                        controller: newPasswordController,
+                        decoration: new InputDecoration(
+                            hintText: "Новый пароль",
+                            border: OutlineInputBorder()),
+                      ),
+                    ),
+                  ],
+                ));
           },
         ),
         Row(
@@ -87,6 +95,10 @@ class ProfileScreenState extends State<ProfileScreen> {
           children: [
             ElevatedButton(
                 onPressed: () {
+                  if(!formKey.currentState!.validate()) {
+                    return;
+                  }
+
                   String userName = userNameController.text;
                   String email = emailController.text;
                   String oldPassword = oldPasswordController.text;
