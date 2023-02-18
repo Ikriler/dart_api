@@ -108,7 +108,7 @@ class AppUserConttolelr extends ResourceController {
         ..values.hashPassword = newHashPassword;
 
       // Обновляем пароль
-      await qUpdateUser.fetchOne();
+      await qUpdateUser.updateOne();
 
       return AppResponse.ok(body: 'Пароль успешно обновлен');
     } catch (e) {

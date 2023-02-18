@@ -16,7 +16,7 @@ class AppTokenContoller extends Controller {
       final token = const AuthorizationBearerParser().parse(header);
 
       // Получаем jwtClaim для проверки token
-      final jwtClaim = verifyJwtHS256Signature(token ?? "", AppConst.secretKey);
+      final jwtClaim = verifyJwtHS256Signature(token ?? "", AppConst.secretKey, maxAge: Duration(days: 7));
       // Валидируем наш token
       jwtClaim.validate();
       return request;
