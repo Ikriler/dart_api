@@ -2,5 +2,5 @@ database:
   username: "admin"
   password: "root"
   host: "192.168.61.128"
-  port: 6101
+  port: 5432
   databaseName: "postgres"

@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  postgres_db:
+    container_name: postgres_db
+    restart: always
+    privileged: true
+    environment:
+      - POSTGRES_HOST=192.168.61.128
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=postgres
+    image: postgres:14.3-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg:/var/lib/postgresql/data/
+    command:
+      - "postgres"
+      - "-c"
+      - "port=5432"
+  api:
+    build: .
+    ports:
+      - 8888:8888
+
+volumes:
+  pg:
